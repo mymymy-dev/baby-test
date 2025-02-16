@@ -1,0 +1,9 @@
+.git*
+.idea*
+*.md
+/storage/app/public/*
+tests/
+/.env*
+/phpunit.xml
+/rsync*
+/database/database.sqlite
