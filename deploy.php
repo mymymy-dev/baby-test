@@ -9,10 +9,9 @@
 
 $host = 'shell.r6.websupport.sk';
 $user = 'uid4285016';
-$port = 29393;
-$path = '~/t-rextravel.com/sub/contractions';
+$port = 27815;
+$path = '~/t-rextravel.com/sub/baby';
 
 $remote = $user . '@' . $host . ':' . $path;
 
-//exec('rsync -avz --progress --exclude-from \'rsync-ignore\' -e "ssh -p ' . $port . '" . trex@87.197.105.187:t-rextravel.com');
-exec('rsync -rhvzP --no-perms --no-owner --no-group --stats --exclude-from \'rsync-ignore\' /Users/sucho/WAME/Laravel/kontackie/ -e "ssh -p ' . $port . '" ' . $remote);
+exec('rsync -rhvzP --no-perms --no-owner --no-group --stats --exclude-from \'rsync-ignore\' /Users/sucho/Projects/Laravel/baby/ -e "ssh -p ' . $port . '" ' . $remote);
