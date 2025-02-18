@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace {{ factoryNamespace }};
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use {{ namespacedModel }};
+
+/**
+ * @extends Factory<{{ model }}>
+ */
+class {{ factory }}Factory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            //
+        ];
+    }
+
+//    public function disabled(): static
+//    {
+//        return $this->state(fn (array $attributes) => [
+//            'status' => false,
+//        ]);
+//    }
+}

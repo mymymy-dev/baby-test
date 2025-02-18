@@ -1,0 +1,24 @@
+{
+	"name": "mymymy-dev/user",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"My\\User\\": "src/",
+			"My\\User\\Tests\\": "tests/",
+			"My\\User\\Database\\Factories\\": "database/factories/",
+			"My\\User\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"My\\User\\Providers\\UserServiceProvider"
+			]
+		}
+	}
+}

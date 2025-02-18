@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+
+class {{ class }}
+{
+    public function creating({{ model }} $model): void
+    {
+        //
+    }
+
+    public function created({{ model }} $model): void
+    {
+        //
+    }
+
+    public function updating({{ model }} $model): void
+    {
+        //
+    }
+
+    public function updated({{ model }} $model): void
+    {
+        //
+    }
+
+    public function deleting({{ model }} $model): void
+    {
+        //
+    }
+
+    public function deleted({{ model }} $model): void
+    {
+        //
+    }
+
+    public function restored({{ model }} $model): void
+    {
+        //
+    }
+
+    public function forceDeleted({{ model }} $model): void
+    {
+        //
+    }
+}
