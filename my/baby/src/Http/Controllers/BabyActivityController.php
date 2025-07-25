@@ -21,6 +21,7 @@ class BabyActivityController
 
         $activities = BabyActivity::whereDate('date', $date->format('Y-m-d'))
             ->orderByDesc('date')
+            ->orderByDesc('created_at')
             ->get();
 
         return Inertia::render('BabyActivities/Index', [
@@ -50,20 +51,45 @@ class BabyActivityController
         $type = $request->type;
         $data = null;
 
+        // Feeding
         if ($type === BabyActivityTypeEnum::FEEDING->value) {
-            $data = [
-                'type' => $request->data_type,
-            ];
+            $data = ['type' => $request->data_type];
 
             if ($request->data_type === 'breast') {
                 $data['side'] = $request->data_side;
-            } elseif ($request->data_type === 'breast') {
+            } elseif ($request->data_type === 'formula') {
                 $data['amount'] = $request->data_amount;
+            } elseif (in_array($request->data_type, ['infant_food', 'food'])) {
+                $data['value'] = $request->data_value;
             }
-        } elseif ($type === BabyActivityTypeEnum::DIAPER_CHANGE->value) {
+        }
+        // Diaper change
+        elseif ($type === BabyActivityTypeEnum::DIAPER_CHANGE->value) {
+            $data = ['type' => $request->data_type];
+        }
+        // Medicament
+        elseif ($type === BabyActivityTypeEnum::MEDICAMENT->value) {
             $data = [
                 'type' => $request->data_type,
+                'amount' => $request->data_amount,
             ];
+        }
+        // Vaccination
+        elseif ($type === BabyActivityTypeEnum::VACCINATION->value) {
+            $data = ['type' => $request->data_type];
+        }
+        // Tooth
+        elseif ($type === BabyActivityTypeEnum::TOOTH->value) {
+            $data = ['value' => $request->data_value];
+        }
+        // Temperature, Height and Weight
+        elseif (in_array($type, [
+            BabyActivityTypeEnum::TOOTH->value,
+            BabyActivityTypeEnum::TEMPERATURE->value,
+            BabyActivityTypeEnum::HEIGHT->value,
+            BabyActivityTypeEnum::WEIGHT->value
+        ])) {
+            $data = ['value' => str_replace(',', '.', $request->data_value)];
         }
 
         BabyActivity::create([

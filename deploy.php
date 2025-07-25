@@ -9,7 +9,7 @@
 
 $host = 'shell.r6.websupport.sk';
 $user = 'uid4285016';
-$port = 27815;
+$port = 28350;
 $path = '~/t-rextravel.com/sub/baby';
 
 $remote = $user . '@' . $host . ':' . $path;

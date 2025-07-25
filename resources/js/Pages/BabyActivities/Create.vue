@@ -14,11 +14,7 @@ const form = useForm({
     data_type: null,
     data_side: null,
     data_amount: null,
-    // data: {
-    //     type: null,
-    //     side: null,
-    //     amount: null,
-    // },
+    data_value: null,
 });
 
 const submit = () => {
@@ -55,7 +51,7 @@ input, select {
         </div>
 
         <div class="m-4">
-            <label class="block">Typ aktivity:</label>
+            <label class="block">Typ aktivity</label>
             <select v-model="form.type" class="w-full p-2 border rounded mt-2 text-black">
                 <option value="" disabled selected>Vyberte...</option>
                 <option value="sleep">🌜 Spánok</option>
@@ -63,23 +59,31 @@ input, select {
                 <option value="feeding">🍼 Kŕmenie</option>
                 <option value="diaper_change">💩 Prebaľovanie</option>
                 <option value="bathing">🛀 Kúpanie</option>
+                <option value="medicament">💊 Lieky</option>
+                <option value="vaccination">💉 Očkovanie</option>
+                <option value="tooth">🦷 Zuby</option>
+                <option value="temperature">🌡️ Teplota</option>
+                <option value="height">📏 Výška</option>
+                <option value="weight">⚖️ Váha</option>
             </select>
 
             <div class="mt-4">
-                <label class="block">Dátum:</label>
+                <label class="block">Dátum</label>
                 <input type="datetime-local" v-model="form.date" class="w-full p-2 border rounded text-black" />
             </div>
 
             <div v-if="form.type === 'feeding'" class="mt-4">
-                <label class="block">Typ kŕmenia:</label>
+                <label class="block">Typ kŕmenia</label>
                 <select v-model="form.data_type" class="w-full p-2 border rounded text-black">
                     <option value="" disabled selected>Vyberte...</option>
                     <option value="breast">Dojčenie</option>
                     <option value="formula">Umelé mlieko</option>
+                    <option value="infant_food">Príkrm</option>
+                    <option value="food">Jedlo</option>
                 </select>
 
-                <div v-if="form.data_type === 'breast'" class="mt-2">
-                    <label class="block">Strana prsníka:</label>
+                <div v-if="form.data_type === 'breast'" class="mt-4">
+                    <label class="block">Strana prsníka</label>
                     <select v-model="form.data_side" class="w-full p-2 border rounded text-black">
                         <option value="" disabled selected>Vyberte...</option>
                         <option value="left">Ľavý</option>
@@ -87,20 +91,60 @@ input, select {
                     </select>
                 </div>
 
-                <div v-if="form.data_type === 'formula'" class="mt-2">
-                    <label class="block">Množstvo (ml):</label>
+                <div v-if="form.data_type === 'formula'" class="mt-4">
+                    <label class="block">Množstvo (ml)</label>
                     <input v-model="form.data_amount" type="number" class="w-full p-2 border rounded text-black" min="0" />
+                </div>
+
+                <div v-if="form.data_type === 'infant_food' || form.data_type === 'food'" class="mt-4">
+                    <label class="block">Popis</label>
+                    <textarea v-model="form.data_value" class="w-full p-2 border rounded text-black" />
                 </div>
             </div>
 
             <div v-if="form.type === 'diaper_change'" class="mt-4">
-                <label class="block">Typ prebaľovania:</label>
+                <label class="block">Typ prebaľovania</label>
                 <select v-model="form.data_type" class="w-full p-2 border rounded text-black">
                     <option value="" disabled selected>Vyberte...</option>
                     <option value="wet">Moč</option>
                     <option value="dirty">Stolica</option>
                     <option value="both">Oboje</option>
                 </select>
+            </div>
+
+            <div v-if="form.type === 'medicament'" class="mt-4">
+                <label class="block">Typ lieku</label>
+                <input v-model="form.data_type" class="w-full p-2 border rounded text-black" />
+
+                <div class="mt-4">
+                    <label class="block">Dávka</label>
+                    <input v-model="form.data_amount" class="w-full p-2 border rounded text-black" />
+                </div>
+            </div>
+
+            <div v-if="form.type === 'vaccination'" class="mt-4">
+                <label class="block">Typ očkovania</label>
+                <input v-model="form.data_type" class="w-full p-2 border rounded text-black" />
+            </div>
+
+            <div v-if="form.type === 'tooth'" class="mt-4">
+                <label class="block">Popis</label>
+                <textarea v-model="form.data_value" class="w-full p-2 border rounded text-black" />
+            </div>
+
+            <div v-if="form.type === 'temperature'" class="mt-4">
+                <label class="block">Teplota v °C</label>
+                <input v-model="form.data_value" class="w-full p-2 border rounded text-black" />
+            </div>
+
+            <div v-if="form.type === 'weight'" class="mt-4">
+                <label class="block">Váha v Kg</label>
+                <input v-model="form.data_value" class="w-full p-2 border rounded text-black" />
+            </div>
+
+            <div v-if="form.type === 'height'" class="mt-4">
+                <label class="block">Výška v cm</label>
+                <input v-model="form.data_value" class="w-full p-2 border rounded text-black" />
             </div>
 
             <button @click="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full mt-4">

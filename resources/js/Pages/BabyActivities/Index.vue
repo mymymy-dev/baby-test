@@ -125,6 +125,12 @@ body {
                             <div v-if="activity.type === 'feeding'">🍼</div>
                             <div v-if="activity.type === 'diaper_change'">💩</div>
                             <div v-if="activity.type === 'bathing'">🛀</div>
+                            <div v-if="activity.type === 'medicament'">💊</div>
+                            <div v-if="activity.type === 'vaccination'">💊</div>
+                            <div v-if="activity.type === 'temperature'">🌡️</div>
+                            <div v-if="activity.type === 'tooth'">🦷</div>
+                            <div v-if="activity.type === 'height'">📏</div>
+                            <div v-if="activity.type === 'weight'">⚖️</div>
                         </td>
 
                         <td class="p-2 border-b border-b-gray-800">
@@ -133,6 +139,12 @@ body {
                             <div v-if="activity.type === 'feeding'" class="font-bold">Kŕmenie</div>
                             <div v-if="activity.type === 'diaper_change'" class="font-bold">Prebaľovanie</div>
                             <div v-if="activity.type === 'bathing'" class="font-bold">Kúpanie</div>
+                            <div v-if="activity.type === 'medicament'" class="font-bold">Lieky</div>
+                            <div v-if="activity.type === 'vaccination'" class="font-bold">Očkovanie</div>
+                            <div v-if="activity.type === 'tooth'" class="font-bold">Zuby</div>
+                            <div v-if="activity.type === 'temperature'" class="font-bold">Teplota: <strong>{{ activity.data.value.replace('.', ',') }} °C</strong></div>
+                            <div v-if="activity.type === 'height'" class="font-bold">Výška: <strong>{{ activity.data.value.replace('.', ',') }} cm</strong></div>
+                            <div v-if="activity.type === 'weight'" class="font-bold">Váha: <strong>{{ activity.data.value.replace('.', ',') }} Kg</strong></div>
 
                             <div v-if="activity.type === 'feeding' && activity.data">
                                 <small v-if="activity.data.type === 'breast'">Dojčenie</small>
@@ -140,16 +152,35 @@ body {
                                 <small v-if="activity.data.type === 'breast' && activity.data.side === 'right'">, Pravý prsník</small>
 
                                 <small v-if="activity.data.type === 'formula'">Umelé mlieko</small>
-                                <small v-if="activity.data.type === 'formula' && activity.data.amount">{{ activity.data.amount + ' ml' }}</small>
+                                <small v-if="activity.data.type === 'formula' && activity.data.amount">, {{ activity.data.amount + ' ml' }}</small>
+
+                                <div v-if="activity.data.type === 'infant_food' || activity.data.type === 'food'">
+                                    <small v-if="activity.data.type === 'infant_food'" class="font-bold">Príkrm: </small>
+                                    <small v-if="activity.data.type === 'food'" class="font-bold">Jedlo: </small>
+                                    <small>{{ activity.data.value }}</small>
+                                </div>
                             </div>
+
                             <div v-if="activity.type === 'diaper_change' && activity.data">
                                 <small v-if="activity.data.type === 'wet' || activity.data.type === 'both'">Moč</small>
                                 <small v-if="activity.data.type === 'both'">, </small>
                                 <small v-if="activity.data.type === 'dirty' || activity.data.type === 'both'">Stolica</small>
                             </div>
+
+                            <div v-if="activity.type === 'medicament' && activity.data">
+                                <small><strong>{{ activity.data.type }}</strong> - {{ activity.data.amount }}</small>
+                            </div>
+
+                            <div v-if="activity.type === 'vaccination' && activity.data">
+                                <small>{{ activity.data.type }}</small>
+                            </div>
+
+                            <div v-if="activity.type === 'tooth' && activity.data">
+                                <small>{{ activity.data.value }}</small>
+                            </div>
                         </td>
 
-                        <td class="p-2 text-right border-b border-b-gray-800">
+                        <td class="p-2 text-center border-b border-b-gray-800">
                             {{ new Date(activity.date).toLocaleTimeString("sk-SK", { hour: "2-digit", minute: "2-digit" }) }}
                         </td>
 
@@ -165,7 +196,17 @@ body {
                         </td>
                     </tr>
                     <tr v-if="activities.length === 0">
-                        <td colspan="3" class="text-center py-4 text-gray-600">Žiadne aktivity v tento deň.</td>
+                        <td colspan="3" class="text-center py-4 text-gray-600">
+                            Žiadne aktivity v tento deň<br>
+
+                            <Link href="/baby-activities/create" class="inline-block pl-1 pr-4 py-1 mt-2 text-blue-500 font-semibold border border-blue-500 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" class="inline-block mr-1">
+                                    <path d="M12 8V16M16 12L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                                Pridať
+                            </Link>
+                        </td>
                     </tr>
                 </tbody>
             </table>
